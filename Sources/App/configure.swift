@@ -7,7 +7,6 @@ public func configure(_ app: Application) throws {
     // uncomment to serve files from /Public folder
     // app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
 
-    
     app.databases.use(.postgres(
         hostname: Environment.get("DATABASE_HOST") ?? "localhost",
         port: Environment.get("DATABASE_PORT").flatMap(Int.init(_:)) ?? 5433,
@@ -16,9 +15,22 @@ public func configure(_ app: Application) throws {
         database: Environment.get("DATABASE_NAME") ?? "itemManager"
     ), as: .psql)
 
-    app.migrations.add(CreateProductMigration())
+   
+    AppMigrations.all().forEach{app.migrations.add($0)}
+   
+    
     try app.autoMigrate().wait()
 
     // register routes
     try routes(app)
+}
+
+
+
+class AppMigrations {
+    static func all() -> [Migration] {
+        return [
+            CreateProductMigration(),
+        ]
+    }
 }
