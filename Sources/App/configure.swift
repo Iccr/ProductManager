@@ -16,7 +16,8 @@ public func configure(_ app: Application) throws {
         database: Environment.get("DATABASE_NAME") ?? "itemManager"
     ), as: .psql)
 
-    app.migrations.add(ProductMigration())
+    app.migrations.add(CreateProductMigration())
+    try app.autoMigrate().wait()
 
     // register routes
     try routes(app)
