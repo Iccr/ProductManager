@@ -3,12 +3,14 @@ import Vapor
 
 func routes(_ app: Application) throws {
     app.get { req in
-        return "It works!"
+         return req.view.render("index", ["title": "Product manager"])
     }
 
     app.get("hello") { req -> String in
         return "Hello, world!"
     }
 
+    
+    
     try app.register(collection: TodoController())
 }
