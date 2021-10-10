@@ -7,12 +7,22 @@
 
 import Foundation
 import Vapor
+import Fluent
 
 class ProductController {
     
     func index(req: Request) -> EventLoopFuture<View> {
         
-        return req.view.render("index", ["title": "Product manager"])
+        struct ProductContext: Encodable {
+            var title = "Product Manager"
+            var products: [Product]
+        }
+        
+        return Product.query(on: req.db).all().flatMap {
+            return req.view.render("index", ProductContext(products: $0))
+        }
+        
+        
     }
     
 }
