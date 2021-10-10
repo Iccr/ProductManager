@@ -21,6 +21,8 @@ public func configure(_ app: Application) throws {
     app.migrations.add(CreateCategoryMigration())
     app.migrations.add(CreateProductCategoriesPivotMigration())
    
+    Seed.seedProduct(db: app.db)
+    Seed.seedCategory(db: app.db)
     
     try app.autoMigrate().wait()
 

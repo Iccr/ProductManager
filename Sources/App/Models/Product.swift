@@ -56,7 +56,7 @@ final class Product: Model {
     init() { }
 
     // Creates a new Planet with all properties set.
-    init(id: Int? = nil, name: String) {
+    init(id: Int? = nil, name: String, description: String, status: String, sku: String) {
         self.id = id
         self.name = name
         self.description = description

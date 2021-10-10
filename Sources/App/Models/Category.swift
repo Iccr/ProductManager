@@ -36,9 +36,8 @@ final class Category: Model {
     @Field(key: "isMain")
     var isMain: Bool
     
-    @Field(key: "subcategories")
-    var subcategories: Category?
-    
+  
+
     @Timestamp(key: "created_at", on: .create)
     var createdAt: Date?
     
@@ -50,12 +49,11 @@ final class Category: Model {
     
     init() {}
     
-    init(id: Int?, name: String, sort: Int?, isMain: Bool, subcategories: Category?) {
+    init(id: Int?, name: String, sort: Int?, isMain: Bool) {
         self.id = id
         self.name = name
         self.sort = sort
         self.isMain = isMain
-        self.subcategories = subcategories
     }
 }
 
