@@ -3,7 +3,7 @@ import Vapor
 
 func routes(_ app: Application) throws {
     app.get { req in
-         return req.view.render("index", ["title": "Product manager"])
+        ProductController().index(req: req)
     }
 
     app.get("hello") { req -> String in
