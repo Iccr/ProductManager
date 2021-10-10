@@ -21,7 +21,15 @@ class ProductController {
         return Product.query(on: req.db).all().flatMap {
             return req.view.render("index", ProductContext(products: $0))
         }
-        
+    }
+    
+    
+    func create(req: Request) throws -> EventLoopFuture<Response> {
+        let product =  try req.content.decode(Product.self)
+        product.status = "draft"
+       return product.save(on: req.db).map {
+        return req.redirect(to: "/")
+        }
         
     }
     

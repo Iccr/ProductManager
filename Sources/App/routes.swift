@@ -11,6 +11,8 @@ func routes(_ app: Application) throws {
     }
 
     
-    
+    app.post("products") { req in
+       try ProductController().create(req: req)
+    }
     try app.register(collection: TodoController())
 }

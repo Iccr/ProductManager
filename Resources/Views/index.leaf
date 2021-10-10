@@ -8,7 +8,7 @@
 
 <body>
   <h1>#(title)</h1>
-  <form action="/create.php">
+  <form method="post" action="/products">
   <label for="name">Name:</label>
   <input type="text" id="name" name="name" placeholder="product name"><br>
   <label for="description">description:</label>
