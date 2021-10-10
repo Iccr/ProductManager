@@ -9,16 +9,17 @@ import Foundation
 import Fluent
 
 
-struct CreateProductCategoryPivot: Migration {
+struct CreateProductCategoriesPivotMigration: Migration {
     func prepare(on database: Database) -> EventLoopFuture<Void> {
-        database.schema("product_category")
+        database.schema(AppSchema.product_categories.rawValue)
             .field("id", .int, .identifier(auto: true))
-            .field("product_id", .int, .required, .references("products", "id", onDelete: .cascade, onUpdate: .cascade))
-            .field("category_id", .int, .required, .references("category", "id", onDelete: .cascade, onUpdate: .cascade))
+            .field("product_id", .int, .required, .references(AppSchema.products.rawValue, "id", onDelete: .cascade, onUpdate: .cascade))
+            .field("category_id", .int, .required, .references(AppSchema.categories.rawValue, "id", onDelete: .cascade, onUpdate: .cascade))
+            .unique(on: "product_id", "category_id")
             .create()
     }
     
     func revert(on database: Database) -> EventLoopFuture<Void> {
-        database.schema("product_category").delete()
+        database.schema(AppSchema.product_categories.rawValue).delete()
     }
 }

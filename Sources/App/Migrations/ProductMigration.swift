@@ -22,7 +22,7 @@ import Fluent
 
 struct CreateProductMigration: Migration {
     func prepare(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema("products")
+        return database.schema(AppSchema.products.rawValue)
             .field("id", .int, .identifier(auto: true))
             .field("sku", .string)
             .field("name", .string, .required)
@@ -36,6 +36,6 @@ struct CreateProductMigration: Migration {
     }
     
     func revert(on database: Database) -> EventLoopFuture<Void> {
-        return database.schema("products").delete()
+        return database.schema(AppSchema.products.rawValue).delete()
     }
 }

@@ -20,7 +20,7 @@ import Fluent
 
 struct CreateCategoryMigration: Migration {
     func prepare(on database: Database) -> EventLoopFuture<Void> {
-        database.schema("category")
+        database.schema(AppSchema.categories.rawValue)
             .field("id", .int, .identifier(auto: true))
             .field("name", .string, .required)
             .field("sort", .int)
@@ -32,7 +32,7 @@ struct CreateCategoryMigration: Migration {
     }
     
     func revert(on database: Database) -> EventLoopFuture<Void> {
-        database.schema("category").delete()
+        database.schema(AppSchema.categories.rawValue).delete()
     }
     
     

@@ -16,7 +16,10 @@ public func configure(_ app: Application) throws {
     ), as: .psql)
 
    
-    AppMigrations.all().forEach{app.migrations.add($0)}
+//    AppMigrations.all().forEach{app.migrations.add($0)}
+    app.migrations.add(CreateProductMigration())
+    app.migrations.add(CreateCategoryMigration())
+    app.migrations.add(CreateProductCategoriesPivotMigration())
    
     
     try app.autoMigrate().wait()
@@ -31,6 +34,13 @@ class AppMigrations {
     static func all() -> [Migration] {
         return [
             CreateProductMigration(),
+            CreateCategoryMigration(),
+            CreateProductCategoriesPivotMigration(),
         ]
     }
+}
+
+
+enum AppSchema: String {
+    case products, categories, product_categories
 }
