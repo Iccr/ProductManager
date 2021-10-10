@@ -50,8 +50,8 @@ final class Product: Model {
     
 //    @Siblings
     
-//    @Siblings(through: PlanetTag.self, from: \.$planet, to: \.$tag)
-//        public var tags: [Tag]
+    @Siblings(through: ProductCategoryPivot.self, from: \.$product, to: \.$category)
+    public var categories: [Category]
 
     init() { }
 

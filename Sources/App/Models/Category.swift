@@ -45,6 +45,9 @@ final class Category: Model {
     @Timestamp(key: "updated_at", on: .update)
      var updatedAt: Date?
     
+    @Siblings(through: ProductCategoryPivot.self, from: \.$category, to: \.$product)
+    public var products: [Product]
+    
     init() {}
     
     init(id: Int?, name: String, sort: Int?, isMain: Bool, subcategories: Category?) {

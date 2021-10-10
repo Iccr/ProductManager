@@ -27,5 +27,5 @@ final class ProductCategoryPivot: Model {
         self.$product.id = try product.requireID()
         self.$category.id = try category.requireID()
     }
-    init() {}i
+    init() {}
 }
