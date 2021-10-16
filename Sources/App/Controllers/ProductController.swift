@@ -27,6 +27,7 @@ class ProductController {
     func create(req: Request) throws -> EventLoopFuture<Response> {
         let product =  try req.content.decode(Product.self)
         product.status = "draft"
+        product.description = "description"
        return product.save(on: req.db).map {
         return req.redirect(to: "/")
         }

@@ -11,8 +11,7 @@
   <form method="post" action="/products">
   <label for="name">Name:</label>
   <input type="text" id="name" name="name" placeholder="product name"><br>
-  <label for="description">description:</label>
-  <input type="text" id="description" name="description" placeholder="product description"><br><br>
+  
   <input type="submit" value="Submit">
 </form>
 

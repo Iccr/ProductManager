@@ -32,7 +32,7 @@ final class Product: Model {
     var name: String
     
     @Field(key: "description")
-    var description: String
+    var description: String?
     
     @Field(key: "status")
     var status: String?
