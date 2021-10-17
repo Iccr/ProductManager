@@ -7,21 +7,9 @@
 
 import Foundation
 import Fluent
-//
-//Product
-// var id: Int?
-// let sku: String
-// var name: String
-// var description: String?
-// var status: ProductStatus
-// var createdAt: Date?
-// var updatedAt: Date?
-// var deletedAt: Date?
-//
-//categories =  many to many with categories through ProductCategory
-//
+import Vapor
 
-final class Product: Model {
+final class Product: Model, Content {
     // Name of the table or collection.
     static let schema = AppSchema.products.rawValue
     
@@ -62,6 +50,25 @@ final class Product: Model {
         self.description = description
         self.status = status
         self.sku = sku
+    }
+    
+    struct Output {
+        var id: Int?
+        var name: String
+        var description: String?
+        var status: String?
+        var sku: String?
+        var createdAt: Date?
+         var updatedAt: Date?
+    }
+    
+    struct SearchQuery {
+        var id: Int?
+        var name: String?
+        var description: String?
+        var status: String?
+        var sky: String?
+        
     }
 }
 

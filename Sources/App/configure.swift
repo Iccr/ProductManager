@@ -1,13 +1,13 @@
 import Fluent
 import FluentPostgresDriver
 import Vapor
-import Leaf
+
 
 // configures your application
 public func configure(_ app: Application) throws {
-    // uncomment to serve files from /Public folder
+    //ap uncomment to serve files from /Public folder
      app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
-    app.views.use(.leaf)
+    app.http.server.configuration.port = 3000
     app.databases.use(.postgres(
         hostname: Environment.get("DATABASE_HOST") ?? "localhost",
         port: Environment.get("DATABASE_PORT").flatMap(Int.init(_:)) ?? 5433,

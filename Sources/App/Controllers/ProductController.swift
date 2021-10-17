@@ -11,26 +11,28 @@ import Fluent
 
 class ProductController {
     
-    func index(req: Request) -> EventLoopFuture<View> {
+    func index(req: Request) -> EventLoopFuture<[Product]> {
         
-        struct ProductContext: Encodable {
-            var title = "Product Manager"
-            var products: [Product]
-        }
-        
-        return Product.query(on: req.db).all().flatMap {
-            return req.view.render("index", ProductContext(products: $0))
+//        struct ProductContext: Encodable {
+//            var title = "Product Manager"
+//            var products: [Product]
+//        }
+//        let query = req.query.decode(Product.SearchQuery.self)
+        return Product.query(on: req.db)
+            .all()
+            
+            .map {
+            return $0
         }
     }
     
     
-    func create(req: Request) throws -> EventLoopFuture<Response> {
+    func create(req: Request) throws -> EventLoopFuture<Product> {
         let product =  try req.content.decode(Product.self)
         product.status = "draft"
         product.description = "description"
-       return product.save(on: req.db).map {
-        return req.redirect(to: "/")
-        }
+       return product.save(on: req.db)
+            .map { product }
         
     }
     
