@@ -6,11 +6,15 @@ func routes(_ app: Application) throws {
     
 //    api version 1
     
-    apiV1.get("products") { req in
+    app.get("products") { req in
         ProductController().index(req: req)
     }
     
-    apiV1.post("products") { req in
+    app.post("products") { req in
+       try ProductController().create(req: req)
+    }
+    
+    app.post("products", "new") { req in
        try ProductController().create(req: req)
     }
     

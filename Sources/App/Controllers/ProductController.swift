@@ -36,4 +36,9 @@ class ProductController {
         
     }
     
+    
+    func new(req: Request) throws -> EventLoopFuture<View> {
+        return req.view.render("products", ["title": "New Producti"])
+    }
+    
 }
