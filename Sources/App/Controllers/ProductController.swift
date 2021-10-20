@@ -10,7 +10,7 @@ import Vapor
 import Fluent
 
 class ProductController: RouteCollection {
-    
+
     func boot(routes: RoutesBuilder) throws {
         let product = routes.grouped("products")
         product.get( use: index)
@@ -19,24 +19,24 @@ class ProductController: RouteCollection {
     }
     
     func index(req: Request) -> EventLoopFuture<View> {
-        
+
         struct ProductContext: Encodable {
             var title = "Product Manager"
             var products: [Product]
         }
-//        let query = req.query.decode(Product.SearchQuery.self)
+        
         return Product.query(on: req.db)
-            .all().flatMap { products in
+            .sort(\.$createdAt, .descending)
+            .all()
+            .flatMap { products in
                 return req.view.render("admin/pages/products", ProductContext(products: products))
             }
-        }
-    
-    
+    }
     
     func create(req: Request) throws -> EventLoopFuture<Response> {
         let product =  try req.content.decode(Product.self)
         
-       return product.save(on: req.db)
+        return product.save(on: req.db)
             .map {
                 req.redirect(to: "products")
             }

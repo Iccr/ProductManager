@@ -3,8 +3,6 @@
   #extend("head")
   <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
-      #extend("preloader")
-      
       #extend("navbar")
       #extend("mainSidebar")
       #import("mainView")
