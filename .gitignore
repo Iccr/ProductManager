@@ -6,4 +6,5 @@ DerivedData/
 .DS_Store
 db.sqlite
 .swiftpm
-
+Public/uploads
+docker-compose-yml
