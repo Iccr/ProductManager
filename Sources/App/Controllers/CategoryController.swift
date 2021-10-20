@@ -8,7 +8,18 @@
 import Foundation
 import Vapor
 
-class CategoryController {
+
+
+
+class CategoryController: RouteCollection {
+    func boot(routes: RoutesBuilder) throws {
+        let category = routes.grouped("categories")
+        category.get(use: index)
+        category.get("new", use: new)
+        category.post( use: create)
+        }
+    
+    
     
     func index(req: Request) -> EventLoopFuture<View> {
         

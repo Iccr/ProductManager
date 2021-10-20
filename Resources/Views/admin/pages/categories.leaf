@@ -10,7 +10,7 @@
           <h3 class="card-title">Projects</h3>
 
           <div class="card-tools">
-          <a href="/categoriesi/new">
+          <a href="/categories/new">
             <button type="button" class="btn btn-block btn-info">
               New Category
             </button>

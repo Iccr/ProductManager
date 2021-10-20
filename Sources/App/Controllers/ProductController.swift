@@ -9,7 +9,14 @@ import Foundation
 import Vapor
 import Fluent
 
-class ProductController {
+class ProductController: RouteCollection {
+    
+    func boot(routes: RoutesBuilder) throws {
+        let product = routes.grouped("products")
+        product.get( use: index)
+        product.post( use: create)
+        product.get("new", use: new)
+    }
     
     func index(req: Request) -> EventLoopFuture<View> {
         
