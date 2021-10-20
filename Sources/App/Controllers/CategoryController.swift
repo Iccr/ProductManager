@@ -2,25 +2,24 @@
 //  File.swift
 //  
 //
-//  Created by ccr on 10/10/2021.
+//  Created by ccr on 20/10/2021.
 //
 
 import Foundation
 import Vapor
-import Fluent
 
-class ProductController {
+class CategoryController {
     
     func index(req: Request) -> EventLoopFuture<View> {
         
-        struct ProductContext: Encodable {
+        struct CategoryContext: Encodable {
             var title = "Product Manager"
-            var products: [Product]
+            var categories: [Category]
         }
 //        let query = req.query.decode(Product.SearchQuery.self)
-        return Product.query(on: req.db)
-            .all().flatMap { products in
-                return req.view.render("admin/pages/products", ProductContext(products: products))
+        return Category.query(on: req.db)
+            .all().flatMap { categories in
+                return req.view.render("admin/pages/categories", CategoryContext(categories: categories))
             }
         }
     

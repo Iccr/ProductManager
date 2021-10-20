@@ -1,6 +1,12 @@
 import Fluent
 import Vapor
 
+
+enum AppRoutes: String {
+    case products, categories
+}
+
+    
 func routes(_ app: Application) throws {
 //    let apiV1 = app.grouped("api", "v1")
     
@@ -20,6 +26,10 @@ func routes(_ app: Application) throws {
     
     app.get("products", "new") { req in
        try ProductController().new(req: req)
+    }
+    
+    app.get("categories") { req in
+        try CategoryController().index(req: req)
     }
     
     try app.register(collection: TodoController())
