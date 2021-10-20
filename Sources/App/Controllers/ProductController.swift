@@ -20,7 +20,7 @@ class ProductController {
 //        let query = req.query.decode(Product.SearchQuery.self)
         return Product.query(on: req.db)
             .all().flatMap { products in
-                return req.view.render("pages/product", ProductContext(products: products))
+                return req.view.render("admin/pages/product", ProductContext(products: products))
             }
         }
     
@@ -32,7 +32,7 @@ class ProductController {
         product.description = "description"
        return product.save(on: req.db)
             .map {
-                req.redirect(to: "pages/iproduct")
+                req.redirect(to: "admin/pages/iproduct")
             }
         
     }
