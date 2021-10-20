@@ -32,5 +32,13 @@ func routes(_ app: Application) throws {
         try CategoryController().index(req: req)
     }
     
+    app.get("categories", "new") { req in
+        try CategoryController().new(req: req)
+    }
+    
+    app.post("categories") { req in
+        try CategoryController().create(req: req)
+    }
+    
     try app.register(collection: TodoController())
 }

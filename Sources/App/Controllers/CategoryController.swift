@@ -26,17 +26,17 @@ class CategoryController {
     
     
     func create(req: Request) throws -> EventLoopFuture<Response> {
-        let product =  try req.content.decode(Product.self)
+        let category =  try req.content.decode(Category.self)
         
-       return product.save(on: req.db)
+       return category.save(on: req.db)
             .map {
-                req.redirect(to: "products")
+                req.redirect(to: "categories")
             }
         
     }
     
     func new(req: Request) throws -> EventLoopFuture<View> {
-        return req.view.render("admin/pages/newProduct", ["title": "New Producti"])
+        return req.view.render("admin/pages/newCategory", ["title": "New Category"])
     }
     
 }
