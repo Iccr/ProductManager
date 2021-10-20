@@ -18,8 +18,8 @@ func routes(_ app: Application) throws {
        try ProductController().create(req: req)
     }
     
-    app.post("products", "new") { req in
-       try ProductController().create(req: req)
+    app.get("products", "new") { req in
+       try ProductController().new(req: req)
     }
     
     try app.register(collection: TodoController())

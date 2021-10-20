@@ -28,17 +28,16 @@ class ProductController {
     
     func create(req: Request) throws -> EventLoopFuture<Response> {
         let product =  try req.content.decode(Product.self)
-        product.status = "draft"
-        product.description = "description"
+        
        return product.save(on: req.db)
             .map {
-                req.redirect(to: "admin/pages/iproduct")
+                req.redirect(to: "products")
             }
         
     }
     
     func new(req: Request) throws -> EventLoopFuture<View> {
-        return req.view.render("newProduct", ["title": "New Producti"])
+        return req.view.render("admin/pages/newProduct", ["title": "New Producti"])
     }
     
 }

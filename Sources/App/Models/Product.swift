@@ -38,8 +38,8 @@ final class Product: Model, Content {
     
 //    @Siblings
     
-    @Siblings(through: ProductCategoryPivot.self, from: \.$product, to: \.$category)
-    public var categories: [Category]
+//    @Siblings(through: ProductCategoryPivot.self, from: \.$product, to: \.$category)
+//    public var categories: [Category]
 
     init() { }
 
