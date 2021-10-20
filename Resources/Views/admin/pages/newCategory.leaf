@@ -14,11 +14,15 @@
                 </button>
               </div>
             </div> -->
-            <form action="/categories" method="post"> 
+            <form action="#(action)" method="#(method)"> 
             <div class="card-body">
               <div class="form-group">
                 <label for="name">Category Name</label>
-                <input type="text" id="name" name="name" class="form-control">
+                <input type="text" id="name" name="name" class="form-control" value="#(category.name)">
+                #if(category.id):
+                    <input type="hidden" id="id" name="id" class="form-control" value="#(category.id)">    
+                #endif
+                
               </div>
               
           <div class="form-group">

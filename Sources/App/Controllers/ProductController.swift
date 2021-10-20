@@ -26,10 +26,13 @@ class ProductController: RouteCollection {
         }
         
         return Product.query(on: req.db)
-            .sort(\.$createdAt, .descending)
+//            .sort(\.$createdAt, .descending)
             .all()
             .flatMap { products in
-                return req.view.render("admin/pages/products", ProductContext(products: products))
+                return req.view.render(
+                    "admin/pages/products",
+                    ProductContext(products: products)
+                )
             }
     }
     
@@ -40,11 +43,9 @@ class ProductController: RouteCollection {
             .map {
                 req.redirect(to: "products")
             }
-        
     }
     
     func new(req: Request) throws -> EventLoopFuture<View> {
         return req.view.render("admin/pages/newProduct", ["title": "New Producti"])
     }
-    
 }
