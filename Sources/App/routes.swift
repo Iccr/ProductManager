@@ -2,10 +2,14 @@ import Fluent
 import Vapor
 
 func routes(_ app: Application) throws {
-    let apiV1 = app.grouped("api", "v1")
+//    let apiV1 = app.grouped("api", "v1")
     
 //    api version 1
     
+    
+    app.get { req in
+        ProductController().index(req: req)
+    }
     app.get("products") { req in
         ProductController().index(req: req)
     }
