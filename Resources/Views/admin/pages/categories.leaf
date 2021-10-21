@@ -64,7 +64,7 @@
                           </a>
                          
                             <input type="hidden" name="id" value="#(category.id)">
-                              <button type="submit"  class="btn btn-danger btn-sm" href="#">
+                              <button type="submit"  class="btn btn-danger btn-sm" href="#" onClick="alert('Are Your Sure you want to delete')">
                                 <i class="fas fa-trash">
                               </i>
                               Delete
