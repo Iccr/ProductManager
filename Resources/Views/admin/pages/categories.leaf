@@ -57,7 +57,7 @@
 
                       <td class="project-actions text-right">
                           
-                          <a class="btn btn-info btn-sm" href="/categories/edit/#(category.id)">
+                          <a class="btn btn-info btn-sm" href="/categories/#(category.id)/edit">
                               <i class="fas fa-pencil-alt">
                               </i>
                               Edit
