@@ -55,6 +55,11 @@ final class Category: Model {
         self.sort = sort
         self.isMain = isMain
     }
+    
+    struct Query: Codable {
+        var id: Int?
+        var name: String?
+    }
 }
 
 

@@ -18,8 +18,10 @@ class CategoryController: RouteCollection {
         category.get(use: index)
         category.get("new", use: new)
         category.post( use: create)
+        category.post("delete" ,use: delete)
         category.post(":id", use: update)
         category.get(":id", "edit" ,use: edit)
+        
         
     }
     
@@ -54,9 +56,25 @@ class CategoryController: RouteCollection {
         
     }
     
+    func delete(req: Request) throws -> EventLoopFuture<Response> {
+        let toDelete = try req.content.decode(Category.Query.self)
+        return category(toDelete.id, on: req)
+            .flatMap { _category in
+                if let category = _category {
+                    return category.delete(on: req.db).map {
+                        return req.redirect(to: "/categories")
+                    }
+                }
+                return req.eventLoop.makeSucceededFuture(req.redirect(to: "/categories"))
+            }
+  
+    }
+    
     func update(req: Request) throws -> EventLoopFuture<Response> {
         let toUpdate = try req.content.decode(Category.self)
-        return Category.find(req.parameters.get("id", as: Int.self), on: req.db).flatMap { category in
+        let id = req.parameters.get("id", as: Int.self)
+        
+        return category(id, on: req).flatMap { category in
             if let category = category {
                 category.name = toUpdate.name
                 category.isMain = toUpdate.isMain
@@ -91,6 +109,10 @@ class CategoryController: RouteCollection {
                     action: _category == nil ? "/categories": "/categories/\(id!)"
                 ))
          }
+    }
+    
+    private func category(_ id: Int?, on req: Request) -> EventLoopFuture<Category?> {
+         Category.find(id, on: req.db)
     }
     
     
