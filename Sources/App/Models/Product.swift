@@ -108,7 +108,3 @@ extension Product {
     }
 }
 
-
-protocol Updatable {
-    
-}

@@ -19,16 +19,18 @@ class ProductController: RouteCollection {
     }
     
     func index(req: Request) -> EventLoopFuture<View> {
-
-        return Product.query(on: req.db)
-            .sort(\.$createdAt, .descending)
-            .all()
-            .flatMap { products in
-                return req.view.render(
-                    "admin/pages/products",
-                    Product.allContext(products: products)
-                )
-            }
+        do {
+           return try ProductStore().all(req: req)
+                .flatMap { products in
+                    return req.view.render(
+                        "admin/pages/products",
+                        Product.allContext(products: products)
+                    )
+                }
+        } catch (let error) {
+            return  req.view.render("admin/pages/products")
+        }
+        
     }
     
     func create(req: Request) throws -> EventLoopFuture<Response> {
