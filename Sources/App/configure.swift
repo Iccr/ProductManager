@@ -3,6 +3,7 @@ import FluentPostgresDriver
 import Vapor
 import Leaf
 
+
 // configures your application
 public func configure(_ app: Application) throws {
     //ap uncomment to serve files from /Public folder
@@ -25,7 +26,6 @@ public func configure(_ app: Application) throws {
    
     Seed.seedProduct(db: app.db)
     Seed.seedCategory(db: app.db)
-    
     try app.autoMigrate().wait()
 
     // register routes

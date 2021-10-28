@@ -34,12 +34,9 @@ final class Product: Model, Content {
     @Timestamp(key: "updated_at", on: .update)
      var updatedAt: Date?
     
-//    @Siblings(
     
-//    @Siblings
-    
-//    @Siblings(through: ProductCategoryPivot.self, from: \.$product, to: \.$category)
-//    public var categories: [Category]
+    @Siblings(through: ProductCategoryPivot.self, from: \.$product, to: \.$category)
+    public var category: [Category]
 
     init() { }
 
@@ -51,7 +48,10 @@ final class Product: Model, Content {
         self.status = status
         self.sku = sku
     }
-    
+}
+
+// input output & querries
+extension Product {
     struct Output {
         var id: Int?
         var name: String
@@ -68,7 +68,14 @@ final class Product: Model, Content {
         var description: String?
         var status: String?
         var sky: String?
-        
     }
 }
 
+// context
+extension Product {
+    struct NewContext: Encodable {
+        var name: String = "New Product"
+        var categories: [Category] = []
+    }
+    
+}

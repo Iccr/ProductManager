@@ -89,8 +89,6 @@ class CategoryController: RouteCollection {
             
     }
     
-    
-    
     private func _categoryParitalFor(_ req: Request) -> EventLoopFuture<View>{
         let id = req.parameters.get("id", as: Int.self)
         struct CategoryContext: Encodable {

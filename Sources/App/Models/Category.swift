@@ -8,18 +8,6 @@
 import Foundation
 import Fluent
 
-//Category
-//    let id: Int?
-//    let name: String
-//    let sort: Int
-//    let isMain: Bool
-//    let createdAt, updatedAt, deletedAt: Date?
-//    let subcategories: [CategoryResponseBody]
-//    let translations: [TranslationContent]
-//
-//      subcategories =  many to many with product through ProductCategory
-//        many
-
 
 final class Category: Model {
     static let schema = AppSchema.categories.rawValue
@@ -36,8 +24,6 @@ final class Category: Model {
     @Field(key: "isMain")
     var isMain: Bool
     
-  
-
     @Timestamp(key: "created_at", on: .create)
     var createdAt: Date?
     
