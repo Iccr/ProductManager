@@ -9,6 +9,8 @@ import Foundation
 import Fluent
 import Vapor
 
+
+
 final class Product: Model, Content {
     // Name of the table or collection.
     static let schema = AppSchema.products.rawValue
@@ -77,5 +79,25 @@ extension Product {
         var name: String = "New Product"
         var categories: [Category] = []
     }
+
+    struct DeleteQuery: Decodable {
+        var id: Int
+    }
     
+    struct UpdateQuery: Decodable {
+        var id: Int
+        var name: String
+        var description: String?
+        var status: String?
+        var sku: String?
+        var category_id: String?
+    }
+    
+    static func updateFields(from: UpdateQuery, product: Product) -> Product {
+        product.name = from.name
+        product.sku = from.sku ?? product.sku
+        product.status = from.status ?? product.status
+        product.description = from.description ?? product.description
+    }
 }
+

@@ -14,15 +14,12 @@ import Vapor
 class CategoryController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         let category = routes.grouped("categories")
-        
         category.get(use: index)
         category.get("new", use: new)
         category.post( use: create)
         category.post("delete" ,use: delete)
         category.post(":id", use: update)
         category.get(":id", "edit" ,use: edit)
-        
-        
     }
     
     func index(req: Request) -> EventLoopFuture<View> {
@@ -31,6 +28,7 @@ class CategoryController: RouteCollection {
             var categories: [Category]
         }
         
+           
         return Category.query(on: req.db)
             .sort(\.$createdAt, .descending)
             .all().flatMap { categories in
@@ -73,7 +71,6 @@ class CategoryController: RouteCollection {
     func update(req: Request) throws -> EventLoopFuture<Response> {
         let toUpdate = try req.content.decode(Category.self)
         let id = req.parameters.get("id", as: Int.self)
-        
         return category(id, on: req).flatMap { category in
             if let category = category {
                 category.name = toUpdate.name
@@ -84,9 +81,7 @@ class CategoryController: RouteCollection {
             }else {
                 return req.eventLoop.makeSucceededFuture(req.redirect(to: "/categories"))
             }
-            
         }
-            
     }
     
     private func _categoryParitalFor(_ req: Request) -> EventLoopFuture<View>{

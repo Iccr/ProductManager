@@ -50,7 +50,7 @@
               <div class="form-group">
                     <label for="exampleInputFile">Category</label>
                     <div class="input-group">
-                       <select class="select" name="category" required>
+                       <select class="select" name="category_id" required>
                        <option value="">Please Select</option>
                        #for(category in categories):
                          <option value="#(category.id)">#(category.name)</option>
