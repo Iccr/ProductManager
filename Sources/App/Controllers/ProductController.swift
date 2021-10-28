@@ -20,18 +20,13 @@ class ProductController: RouteCollection {
     
     func index(req: Request) -> EventLoopFuture<View> {
 
-        struct ProductContext: Encodable {
-            var title = "Product Manager"
-            var products: [Product]
-        }
-        
         return Product.query(on: req.db)
-//            .sort(\.$createdAt, .descending)
+            .sort(\.$createdAt, .descending)
             .all()
             .flatMap { products in
                 return req.view.render(
                     "admin/pages/products",
-                    ProductContext(products: products)
+                    Product.allContext(products: products)
                 )
             }
     }

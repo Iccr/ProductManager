@@ -11,19 +11,22 @@ import Vapor
 
 
 
-class ProductStore {
-    func all(req: Request) throws -> EventLoopFuture<[Product]> {
-        return Product.query(on: req.db).all()
+
+class ProductStore<Item> {
+    
+    
+    func all<T: Model>(req: Request,  sortKeypath: FieldKey) throws -> EventLoopFuture<[T]> {
+        return T.query(on: req.db).sort(sortKeypath, .descending).all()
     }
     
-    func add(req: Request) throws -> EventLoopFuture<Product> {
-        let toAdd =  try req.content.decode(Product.self)
+    func add<T: Model>(req: Request) throws -> EventLoopFuture<T> {
+        let toAdd =  try req.content.decode(T.self)
         return toAdd
             .save(on: req.db)
             .map { toAdd }
     }
     
-    func update(req: Request) throws -> EventLoopFuture<Product> {
+    func update<T: Model>(req: Request) throws -> EventLoopFuture<T> {
         let toUpdate = try req.content.decode(Product.UpdateQuery.self)
         let id = req.parameters.get("id", as: Int.self)
         return Product.find(id, on: req.db)

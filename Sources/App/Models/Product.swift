@@ -75,6 +75,12 @@ extension Product {
 
 // context
 extension Product {
+    
+    struct allContext: Encodable {
+        var title = "Product Manager"
+        var products: [Product]
+    }
+    
     struct NewContext: Encodable {
         var name: String = "New Product"
         var categories: [Category] = []
@@ -98,6 +104,11 @@ extension Product {
         product.sku = from.sku ?? product.sku
         product.status = from.status ?? product.status
         product.description = from.description ?? product.description
+        return product
     }
 }
 
+
+protocol Updatable {
+    
+}
