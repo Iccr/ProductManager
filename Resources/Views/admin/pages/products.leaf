@@ -2,7 +2,7 @@
     #export("mainView"):
     <div class="content-wrapper">
         #extend("contentHeader")
-     
+            #flash()
         
          <section class="content">
 

@@ -27,9 +27,17 @@ import Leaf
 //        return LeafData.string("<p>Hello \(name)</p>'")
 //    }
 //}
-
-class Flasher: LeafTag {
+struct FlasherTagError: Error {}
+class Flasher: LeafTag, UnsafeUnescapedLeafTag {
     func render(_ ctx: LeafContext) throws -> LeafData {
-        return LeafData.string("<p>Hello \()</p>'")
-    }
+        guard let error = ctx.data["error"]?.string, !error.isEmpty else {
+            return LeafData.string(nil)
+        }
+        return LeafData.string(
+                """
+                    <div class="alert alert-danger" role="alert">
+                        \(error)
+                    </div>
+                """
+        )}
 }

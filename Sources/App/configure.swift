@@ -11,6 +11,7 @@ public func configure(_ app: Application) throws {
      app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
     app.http.server.configuration.port = 3000
     app.views.use(.leaf)
+    app.leaf.tags["flash"] = Flasher()
     app.databases.use(.postgres(
         hostname: Environment.get("DATABASE_HOST") ?? "localhost",
         port: Environment.get("DATABASE_PORT").flatMap(Int.init(_:)) ?? 5433,
