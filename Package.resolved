@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/swift-server/async-http-client.git",
         "state": {
           "branch": null,
-          "revision": "1081b0b0541f535ca088acdb56f5ca5598bc6247",
-          "version": "1.6.3"
+          "revision": "d928cc81b31796dcea7378bf7e2519bed569c659",
+          "version": "1.6.1"
         }
       },
       {
@@ -204,8 +204,17 @@
         "repositoryURL": "https://github.com/vapor/vapor.git",
         "state": {
           "branch": null,
-          "revision": "27119271502bf266be293be5325f0fb72435e8fd",
-          "version": "4.49.2"
+          "revision": "8ee22de2845af389b9ed0e24f63983a0b5da6ab9",
+          "version": "4.49.0"
+        }
+      },
+      {
+        "package": "vapor-rest-kit",
+        "repositoryURL": "https://github.com/KazaiMazai/vapor-rest-kit",
+        "state": {
+          "branch": null,
+          "revision": "a567fdd6428a7a87f2945c6de5c89b6dc93893d2",
+          "version": "1.0.0"
         }
       },
       {

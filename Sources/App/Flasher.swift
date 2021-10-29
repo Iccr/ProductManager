@@ -7,27 +7,9 @@
 
 import Foundation
 import Leaf
-//
-//#if(error):
-//
-//<div class="alert alert-danger" role="alert">
-//
-//</div>
-//#endif
 
-
-//struct HelloTagError: Error {}
-//
-//public func render(_ ctx: LeafContext) throws -> LeafData {
-//
-//        guard let name = ctx.parameters[0].string else {
-//            throw HelloTagError()
-//        }
-//
-//        return LeafData.string("<p>Hello \(name)</p>'")
-//    }
-//}
 struct FlasherTagError: Error {}
+
 class Flasher: LeafTag, UnsafeUnescapedLeafTag {
     func render(_ ctx: LeafContext) throws -> LeafData {
         guard let error = ctx.data["error"]?.string, !error.isEmpty else {
@@ -35,7 +17,7 @@ class Flasher: LeafTag, UnsafeUnescapedLeafTag {
         }
         return LeafData.string(
                 """
-                    <div class="alert alert-danger" role="alert">
+                    <div id = "veda-falsher" class="alert alert-danger" role="alert">
                         \(error)
                     </div>
                 """
