@@ -19,33 +19,39 @@ class ProductController: RouteCollection {
     }
     
     func index(req: Request) -> EventLoopFuture<View> {
+        let error: String? = req.query["error"]
         do {
            return try ProductStore().all(req: req)
                 .flatMap { products in
                     return req.view.render(
-                        "admin/pages/products",
-                        Product.allContext(products: products)
+                        "/admin/pages/products",
+                        Product.allContext(products: products, error: error)
                     )
                 }
         } catch (let error) {
-            return  req.view.render("admin/pages/products")
+            return  req.view.render("/admin/pages/products", Product.allContext(error: error.localizedDescription))
         }
         
     }
     
     func create(req: Request) throws -> EventLoopFuture<Response> {
-        let product =  try req.content.decode(Product.self)
         
-        return product.save(on: req.db)
-            .map {
-                req.redirect(to: "products")
+        do {
+            let product =  try req.content.decode(Product.self)
+            return try ProductStore().add(req: req).map { product in
+                req.redirect(to: "/products")
+                
             }
+        } catch (let error) {
+            return  req.eventLoop.makeSucceededFuture(req.redirect(to: "/products/?error=\(error.localizedDescription)"))
+        }
+        
     }
     
     func new(req: Request) throws -> EventLoopFuture<View> {
         try Categorystore().getAllCategory(req: req).flatMap { categories in
             let context = Product.NewContext(name: "New Product", categories: categories)
-            return req.view.render("admin/pages/newProduct", context)
+            return req.view.render("/admin/pages/newProduct", context)
         }
        
     }

@@ -2,6 +2,8 @@
     #export("mainView"):
     <div class="content-wrapper">
         #extend("contentHeader")
+     
+        
          <section class="content">
 
       <!-- Default box -->

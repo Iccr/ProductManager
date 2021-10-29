@@ -78,7 +78,8 @@ extension Product {
     
     struct allContext: Encodable {
         var title = "Product Manager"
-        var products: [Product]
+        var products: [Product] = []
+        var error: String?
     }
     
     struct NewContext: Encodable {
