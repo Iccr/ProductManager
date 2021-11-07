@@ -49,7 +49,7 @@ class ProductController: RouteCollection {
     }
     
     func new(req: Request) throws -> EventLoopFuture<View> {
-        try Categorystore().getAllCategory(req: req).flatMap { categories in
+        try CategoryStore().getAllCategory(req: req).flatMap { categories in
             let context = Product.NewContext(name: "New Product", categories: categories)
             return req.view.render("/admin/pages/newProduct", context)
         }

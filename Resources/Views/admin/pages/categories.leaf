@@ -31,6 +31,9 @@
                       <th style="width: 30%">
                           Is Parent
                       </th>
+                     <th style="width: 30%">
+                          Number of Products
+                     </th>
                     
                       
                   </tr>
@@ -52,6 +55,10 @@
                       </td>
                       <td>
                           #(category.isMain)
+                      </td>
+
+                         <td>
+                          #(category.productCount)
                       </td>
                    
 

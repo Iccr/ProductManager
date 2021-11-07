@@ -11,10 +11,13 @@ import Fluent
 
 
 
-class Categorystore {
+class CategoryStore {
 
     func getAllCategory(req: Request) throws -> EventLoopFuture<[Category]> {
-        return Category.query(on: req.db).all()
+        return Category.query(on: req.db)
+            .with(\.$products)
+            .all()
     }
     
 }
+

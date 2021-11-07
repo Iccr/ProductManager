@@ -7,7 +7,7 @@
 
 import Foundation
 import Fluent
-
+import Vapor
 
 final class Category: Model {
     static let schema = AppSchema.categories.rawValue
@@ -49,3 +49,23 @@ final class Category: Model {
 }
 
 
+extension Category {
+    var output: Output {
+        return .init(id: self.id, name: self.name, isMain: self.isMain, productCount: self.products.count)
+    }
+    
+    struct Output: Content {
+        var id: Int?
+        var name: String
+        var isMain: Bool = false
+        var productCount: Int?
+    }
+}
+
+extension Category {
+    struct AllContext: Content {
+        var title = "Product Manager"
+        var categories: [Category.Output]
+    }
+
+}

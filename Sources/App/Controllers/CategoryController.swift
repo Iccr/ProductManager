@@ -22,17 +22,12 @@ class CategoryController: RouteCollection {
         category.get(":id", "edit" ,use: edit)
     }
     
-    func index(req: Request) -> EventLoopFuture<View> {
-        struct CategoryContext: Encodable {
-            var title = "Product Manager"
-            var categories: [Category]
-        }
-        
-           
-        return Category.query(on: req.db)
-            .sort(\.$createdAt, .descending)
-            .all().flatMap { categories in
-                return req.view.render("admin/pages/categories", CategoryContext(categories: categories))
+    func index(req: Request) throws -> EventLoopFuture<View> {
+        return try CategoryStore().getAllCategory(req: req)
+            .mapEach({$0.output})
+            .flatMap { categories in
+                return req.view.render("admin/pages/categories",
+                                       Category.AllContext(categories: categories))
             }
     }
     
