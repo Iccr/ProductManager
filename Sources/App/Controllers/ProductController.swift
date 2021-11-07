@@ -16,12 +16,13 @@ class ProductController: RouteCollection {
         product.get( use: index)
         product.post( use: create)
         product.get("new", use: new)
+        product.post("delete", use: delete)
     }
     
     func index(req: Request) -> EventLoopFuture<View> {
         let error: String? = req.query["error"]
         do {
-           return try ProductStore().all(req: req)
+            return try ProductStore().all(req: req).mapEach({$0.output})
                 .flatMap { products in
                     return req.view.render(
                         "/admin/pages/products",
@@ -37,7 +38,6 @@ class ProductController: RouteCollection {
     func create(req: Request) throws -> EventLoopFuture<Response> {
         
         do {
-            let product =  try req.content.decode(Product.self)
             return try ProductStore().add(req: req).map { product in
                 req.redirect(to: "/products")
                 
@@ -55,4 +55,11 @@ class ProductController: RouteCollection {
         }
        
     }
+    
+    func delete(req: Request) throws -> EventLoopFuture<Response> {
+        try ProductStore().delete(req: req).map({ _ in
+            req.redirect(to: "/products")
+        })
+    }
 }
+

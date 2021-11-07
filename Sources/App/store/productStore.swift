@@ -12,14 +12,25 @@ import Vapor
 class ProductStore {
 
     func all(req: Request) throws -> EventLoopFuture<[Product]> {
-        return Product.query(on: req.db).sort(\.$createdAt, .descending).all()
+        return Product.query(on: req.db).with(\.$category)
+            .sort(\.$createdAt, .descending).all()
     }
     
     func add(req: Request) throws -> EventLoopFuture<Product> {
-        let toAdd =  try req.content.decode(Product.self)
-        return toAdd
-            .save(on: req.db)
-            .map { toAdd }
+        let input =  try req.content.decode(Product.Input.self)
+        return Category.find(input.category_id, on: req.db).unwrap(or: Abort(.notFound)).flatMap { category in
+            let toAdd = input.product()
+            return toAdd
+                .save(on: req.db)
+                .flatMap {
+                    toAdd.$category.attach(category, on: req.db).map {
+                        toAdd
+                    }
+                    
+                }
+        }
+        
+       
     }
     
     func update(req: Request) throws -> EventLoopFuture<Product> {

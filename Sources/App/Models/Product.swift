@@ -37,13 +37,14 @@ final class Product: Model, Content {
      var updatedAt: Date?
     
     
+    
     @Siblings(through: ProductCategoryPivot.self, from: \.$product, to: \.$category)
     public var category: [Category]
 
     init() { }
 
     // Creates a new Planet with all properties set.
-    init(id: Int? = nil, name: String, description: String, status: String?, sku: String?) {
+    init(id: Int? = nil, name: String, description: String?, status: String?, sku: String?) {
         self.id = id
         self.name = name
         self.description = description
@@ -54,15 +55,32 @@ final class Product: Model, Content {
 
 // input output & querries
 extension Product {
-    struct Output {
+    struct Output: Content {
         var id: Int?
         var name: String
         var description: String?
         var status: String?
         var sku: String?
+        var category: [Category]
+        var categoryName: String
         var createdAt: Date?
-         var updatedAt: Date?
+        var updatedAt: Date?
     }
+    
+    struct Input:Content {
+        var id: Int?
+        var name: String
+        var description: String?
+        var status: String?
+        var sku: String?
+        var category_id: Int?
+        
+        func product() -> Product {
+            return .init(id: self.id, name: self.name, description: self.description, status: self.status, sku: self.sku)
+        }
+    }
+    
+    
     
     struct SearchQuery {
         var id: Int?
@@ -78,7 +96,7 @@ extension Product {
     
     struct allContext: Encodable {
         var title = "Product Manager"
-        var products: [Product] = []
+        var products: [Product.Output] = []
         var error: String?
     }
     
@@ -87,7 +105,7 @@ extension Product {
         var categories: [Category] = []
     }
 
-    struct DeleteQuery: Decodable {
+    struct DeleteQuery: Content {
         var id: Int
     }
     
@@ -108,4 +126,13 @@ extension Product {
         return product
     }
 }
+
+
+
+extension Product {
+    var output: Output {
+        .init(id: self.id, name: self.name, description: self.description, status: self.status, sku: self.sku, category: self.category, categoryName: self.category.first?.name ?? "", createdAt: self.createdAt, updatedAt: self.updatedAt)
+    }
+}
+
 
